@@ -1,0 +1,13 @@
+<?php
+// $Id$
+
+/**
+ * Implements hook_views_api().
+ */
+function wa_views_views_api() {
+  return array(
+    'api' => 2.0,
+  );
+}
+
+

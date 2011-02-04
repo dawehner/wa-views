@@ -1,0 +1,4 @@
+name = Wolfram Alpha Views
+description = Integration wolfram alpha with views
+dependencies[] = views
+files[] = plugins/wa_views_plugin_query_wa.inc
