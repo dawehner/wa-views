@@ -2,4 +2,5 @@ name = Wolfram Alpha Views
 description = Integration wolfram alpha with views
 dependencies[] = views
 files[] = plugins/wa_views_plugin_query_wa.inc
-files[] = handlers/wa_views_plugins_filter_search.inc
+files[] = handlers/wa_views_handler_filter_search.inc
+files[] = handlers/wa_views_handler_field_markup.inc

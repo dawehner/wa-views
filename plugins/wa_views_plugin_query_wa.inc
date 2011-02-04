@@ -2,7 +2,8 @@
 // $Id$
 
 class wa_views_plugin_query_wa extends views_plugin_query {
-  var $query_url = 'http://api.wolframalpha.com/v2/query?';
+  public $query_url = 'http://api.wolframalpha.com/v2/query?';
+  public $where = array();
 
   function option_definition() {
     $options = parent::option_definition();
@@ -21,28 +22,44 @@ class wa_views_plugin_query_wa extends views_plugin_query {
     );
   }
 
+  function build(&$view) {
+    $view->init_pager();
+
+    // Let the pager modify the query to add limits.
+//     $this->pager->query();
+
+    $view->build_info['query'] = $this->query();
+    $view->build_info['count_query'] = $this->query(TRUE);
+  }
+
   function query($get_count = FALSE) {
     $query = array();
     $query['appid'] = $this->options['appid'];
-    $query = array_merge($this->where, $query);
+    $query['format'] = 'html';
+    $query = array_merge($query, $this->where);
 
-    return url($query_url, array('query' => $query));
+    $ret = url($this->query_url, array('query' => $query));
+    return $ret;
   }
 
   function execute(&$view) {
-    $query = $this->build_info['query'];
+    $query = $view->build_info['query'];
     $start = microtime(TRUE);
 
-    $result = simplexml_load_file($query);
-
-    foreach ($result as $pod) {
-      $view->result[] = (object) (array) $pod;
+    $request = drupal_http_request($query);
+    dsm($request);
+    $result = simplexml_load_string($request->data);
+    if ($result) {
+      $rows = $result->xpath('/');
+      foreach ($rows as $pod) {
+        $view->result[] = $pod;
+      }
     }
 
     $end = microtime(TRUE);
     $view->execute_time = $end - $start;
   }
-  
+
   function add_where($key, $value) {
     $this->where[$key] = $value; 
   }
