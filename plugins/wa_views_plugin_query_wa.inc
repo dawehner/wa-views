@@ -47,13 +47,9 @@ class wa_views_plugin_query_wa extends views_plugin_query {
     $start = microtime(TRUE);
 
     $request = drupal_http_request($query);
-    dsm($request);
     $result = simplexml_load_string($request->data);
-    if ($result) {
-      $rows = $result->xpath('/');
-      foreach ($rows as $pod) {
-        $view->result[] = $pod;
-      }
+    foreach ($result->pod as $pod) {
+      $view->result[] = $pod;
     }
 
     $end = microtime(TRUE);

@@ -12,6 +12,6 @@ class wa_views_handler_field_markup extends views_handler_field {
   function query() { }
   function render($values) {
     // It's html so trust it???
-    return filter_xss($values->markup);
+    return (string) $values->markup;
   }
 }
