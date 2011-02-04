@@ -29,7 +29,7 @@ function wa_views_views_data() {
     'title' => t('wa: markup'),
     'help' => '',
     'field' => array(
-      'handler' => 'wa_views_handler_field_markup',
+      'handler' => 'wa_views_handler_field_value',
     ),
   );
   return $data;
