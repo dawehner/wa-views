@@ -10,6 +10,25 @@ function wa_views_views_data() {
   $data = array();
   $data['wolfram_alpha'] = array(
   );
+  $data['wolfram_alpha']['table']['group'] = t('Wolfram Alpha');
+  // Try whether it's flexible enough.
+//   $data['wolfram_alpha']['table']['base'] = array(
+//     'field' => 
+//   );
+  $data['wolfram_alpha']['search'] = array(
+    'title' => t('wa: Filter key'),
+    'help' => '',
+    'filter' => array(
+      'handler' => 'wa_views_handler_filter_search',
+    ),
+  );
+  $data['wolfram_alpha']['markup'] = array(
+    'title' => t('wa: markup'),
+    'help' => '',
+    'field' => array(
+      'handler' => 'wa_views_handler_field_markup',
+    ),
+  );
   return $data;
 }
 
